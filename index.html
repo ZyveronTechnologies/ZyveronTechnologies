@@ -416,7 +416,8 @@
     box-shadow: 0 0 20px rgba(183, 0, 255, 0.5);
     font-size: 1rem;
 }
-  .menu-container {
+ 
+.menu-container {
   position: relative; /* referencia para el menú */
   display: inline-block;
 }
@@ -424,9 +425,9 @@
 #MenuOpciones {
   max-height: 0;              /* oculto al inicio */
   overflow: hidden;           /* oculta contenido */
-  transition: max-height 1s ease; /* despliegue más lento (1 segundo) */
+  transition: max-height 0.5s ease; /* animación lenta */
   position: absolute;
-  top: 100%;   /* aparece justo debajo del botón */
+  top: 100%;   /* aparece debajo del botón */
   left: 0;     /* alineado con el botón */
   background: rgba(0,0,0,0.8);
   border-radius: 10px;
@@ -451,6 +452,7 @@
   max-height: 500px; /* altura suficiente para mostrar enlaces */
   padding: 10px;     /* padding visible cuando se despliega */
 }
+
 
     </style>
 </head>
