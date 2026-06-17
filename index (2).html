@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZYVERON TECHNOLOGIES</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #111111; /* Oscurecido ligeramente para mejor contraste con neón */
+            color: rgb(16, 193, 237);
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10%;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00d4ff, #b700ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo img {
+            height: 40px; /* Ajustado para que no deforme el header */
+            width: auto;
+        }
+
+        nav a {
+            color: rgb(249, 243, 243);
+            text-decoration: none;
+            margin-left: 25px;
+            transition: .3s;
+        }
+
+        nav a:hover {
+            color: #00d4ff;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            background:
+                linear-gradient(rgba(14, 13, 13, 0.7), rgba(0,0,0,.7)),
+                url('jhos.avif');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #00d4ff, #b700ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: auto;
+            margin-bottom: 30px;
+            color: #e0e0e0;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            background: linear-gradient(90deg, #00d4ff, #b700ff);
+            border: none;
+            border-radius: 50px;
+            color: rgb(250, 247, 247);
+            font-weight: bold;
+            text-decoration: none;
+            transition: .3s;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 25px #00d4ff;
+        }
+
+        section {
+            padding: 100px 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 60px;
+            background: linear-gradient(90deg, #00d4ff, #b700ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            align-items: start; /* Evita que las tarjetas cerradas se estiren si otra se abre */
+        }
+
+        .card {
+            background: #121212;
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,.1);
+            transition: .4s;
+            cursor: pointer; /* Muestra la manito al pasar el mouse */
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(0,212,255,.3);
+            border-color: rgba(0,212,255,.5);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card h3 {
+            margin: 0;
+            color: #00d4ff;
+            font-size: 1.2rem;
+        }
+
+        .toggle-icon {
+            color: #b700ff;
+            font-size: 1.8rem;
+            font-weight: 300;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* --- Tu motor de despliegue suave --- */
+        .card-content-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            opacity: 0;
+            transition: grid-template-rows 0.4s ease, opacity 0.4s ease, margin-top 0.4s ease;
+        }
+
+        .card-content {
+            overflow: hidden;
+        }
+
+        .card-content p {
+            color: #ccc;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* --- Estado cuando se abre la tarjeta --- */
+        .card.abierta .card-content-wrapper {
+            grid-template-rows: 1fr;
+            opacity: 1;
+            margin-top: 15px; /* Separa el texto del título al desplegarse */
+        }
+
+        .card.abierta .toggle-icon {
+            transform: rotate(45deg); /* Gira el '+' para que se convierta en una 'x' */
+            color: #00d4ff;
+        }
+
+        .about {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about img {
+            width: 100%;
+            border-radius: 20px;
+        }
+
+        .about-text h2 {
+            margin-bottom: 20px;
+            color: #b700ff;
+        }
+        
+        .about-text p {
+            color: #ccc;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 30px;
+            background: #111;
+            border-radius: 20px;
+        }
+
+        .stat h3 {
+            font-size: 2.5rem;
+            color: #00d4ff;
+        }
+
+        .contact {
+            text-align: center;
+        }
+
+        .contact form {
+            max-width: 700px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #1a1a1a;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+        textarea {
+    resize: vertical; /* Solo permite estirar hacia arriba y abajo */
+    max-height: 300px; /* Pone un límite para que no lo estiren infinitamente */
+}
+        
+        input:focus, textarea:focus {
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+            border-bottom: 2px solid #00d4ff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #0a0a0a;
+            border-top: 1px solid rgba(255,255,255,.1);
+            color: #888;
+        }
+
+        .glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: #00d4ff;
+            filter: blur(180px);
+            opacity: .15;
+            top: 10%;
+            left: -100px;
+            z-index: -1;
+        }
+
+        .glow2 {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: #b700ff;
+            filter: blur(180px);
+            opacity: .15;
+            bottom: 10%;
+            right: -100px;
+            z-index: -1;
+        }
+
+        /* ==================================================================== */
+        /* --- NUEVO: SISTEMA DE VENTANAS SECRETAS Y TARJETAS INTERACTIVAS ---  */
+        /* ==================================================================== */
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        .role-cards { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+            margin-bottom: 10px; 
+        }
+        
+        .role-card { 
+            padding: 15px 20px; 
+            border: 2px solid #333; 
+            border-radius: 12px; 
+            background: #1a1a1a; 
+            font-weight: 600; 
+            color: #888; 
+            cursor: pointer; 
+            transition: all 0.4s ease;
+            position: relative; 
+            overflow: hidden; 
+        }
+        
+        .role-card:hover { 
+            border-color: #b700ff; 
+            transform: translateY(-2px); 
+            color: white;
+        }
+        
+        .role-card.active { 
+            border-color: #00d4ff; 
+            background: rgba(0, 212, 255, 0.05); 
+            color: #00d4ff; 
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+        
+        .role-card.active::before {
+            content: '✓'; 
+            position: absolute; 
+            right: 20px; 
+            color: #00d4ff; 
+            font-weight: 900; 
+            font-size: 1.2rem;
+        }
+
+        /* El Grid Method para el despliegue suave */
+        .form-reveal-group { 
+            display: grid; 
+            grid-template-rows: 0fr; 
+            opacity: 0; 
+            visibility: hidden; 
+            transition: grid-template-rows 0.5s ease, opacity 0.4s ease, visibility 0.5s; 
+            margin-bottom: 0; 
+        }
+        
+        .form-reveal-group.active { 
+            grid-template-rows: 1fr; 
+            opacity: 1; 
+            visibility: visible; 
+            margin-bottom: 20px; 
+        }
+        
+        .form-reveal-content { 
+            overflow: hidden; 
+        }
+
+        @media(max-width: 900px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .about { grid-template-columns: 1fr; }
+            nav { display: none; }
+        }
+        /* --- ESTILOS DEL MODO ADMIN --- */
+.modo-admin-activo [contenteditable="true"] {
+    border: 2px dashed #b700ff;
+    background: rgba(183, 0, 255, 0.1);
+    outline: none;
+    border-radius: 5px;
+    padding: 2px;
+    transition: all 0.3s ease;
+}
+
+.modo-admin-activo [contenteditable="true"]:focus {
+    background: rgba(0, 212, 255, 0.2);
+    border-color: #00d4ff;
+}
+
+#btnGuardarAdmin {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 2000;
+    background: linear-gradient(90deg, #00d4ff, #b700ff);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(183, 0, 255, 0.5);
+    font-size: 1rem;
+}
+    </style>
+</head>
+<body>
+
+    <div class="glow"></div>
+    <div class="glow2"></div>
+
+    <header>
+        <div class="logo" ondblclick="activarAdmin()" style="cursor: pointer;" title="Doble clic para Modo Admin">
+    <img src="ChatGPT Image 13 jun 2026, 15_44_05.png" alt="logo"> 
+    Zyveron
+</div>
+        <nav>
+            <a href="#inicio">Inicio</a>
+            <a href="#servicios">Servicios</a>
+            <a href="#nosotros">Nosotros</a>
+            <a href="#contacto">Contacto</a>
+        </nav>
+    </header>
+
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1>Soluciones Tecnológicas Innovadoras</h1>
+            <p>
+                Innovamos, desarrollamos y transformamos negocios mediante
+                soluciones tecnológicas inteligentes, modernas y escalables.
+            </p>
+            <a href="#servicios" class="btn">Descubrir Servicios</a>
+        </div>
+    </section>
+
+    <section id="servicios">
+        <h2 class="section-title">Nuestros Servicios</h2>
+
+        <div class="services">
+            
+            <div class="card" onclick="toggleTarjeta(this)">
+                <div class="card-header">
+                    <h3>Desarrollo Web</h3>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="card-content-wrapper">
+                    <div class="card-content">
+                        <p>Sitios web modernos, rápidos y optimizados para empresas y negocios.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" onclick="toggleTarjeta(this)">
+                <div class="card-header">
+                    <h3>Aplicaciones Móviles</h3>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="card-content-wrapper">
+                    <div class="card-content">
+                        <p>Apps Android e iOS personalizadas para impulsar tu empresa.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" onclick="toggleTarjeta(this)">
+                <div class="card-header">
+                    <h3>Sistema de Citas</h3>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="card-content-wrapper">
+                    <div class="card-content">
+                        <p>Automatiza reservas, reportes y gestión de clientes de forma inteligente.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" onclick="toggleTarjeta(this)">
+                <div class="card-header">
+                    <h3>Ciberseguridad</h3>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="card-content-wrapper">
+                    <div class="card-content">
+                        <p>Protección avanzada para tus datos, servidores y sistemas empresariales.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" onclick="toggleTarjeta(this)">
+                <div class="card-header">
+                    <h3>Cloud Computing</h3>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="card-content-wrapper">
+                    <div class="card-content">
+                        <p>Infraestructura segura en la nube con alta disponibilidad.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" onclick="toggleTarjeta(this)">
+                <div class="card-header">
+                    <h3>Soporte Tecnológico</h3>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="card-content-wrapper">
+                    <div class="card-content">
+                        <p>Asistencia técnica especializada para empresas y emprendedores.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="nosotros">
+        <h2 class="section-title">Sobre Nosotros</h2>
+        <div class="about">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3" alt="Tecnología">
+            <div class="about-text">
+                <h2>Transformando el Futuro Digital</h2>
+                <p>
+                    ZYVERON TECHNOLOGIES nace con la visión de ofrecer soluciones
+                    innovadoras que ayuden a empresas y emprendedores a crecer
+                    mediante tecnología de última generación.
+                </p>
+                <br>
+                <p>
+                    Nuestro compromiso es desarrollar herramientas digitales que
+                    impulsen la eficiencia, seguridad y competitividad de nuestros clientes.
+                </p>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <h3>100%</h3>
+                <p>Innovación</p>
+            </div>
+            <div class="stat">
+                <h3>24/7</h3>
+                <p>Soporte</p>
+            </div>
+            <div class="stat">
+                <h3>50+</h3>
+                <p>Soluciones Entregadas</p>
+            </div>
+            <div class="stat">
+                <h3>∞</h3>
+                <p>Posibilidades</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto">
+        <h2 class="section-title">Contáctanos</h2>
+        <div class="contact">
+            
+<form id="proyectoForm">
+                
+                <div class="form-group">
+                    <input type="text" id="clienteNombre" placeholder="Tu Nombre o Empresa" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="email" id="clienteCorreo" placeholder="Correo Electrónico" required>
+                </div>
+
+                <div class="form-group">
+                    <label>¿Qué servicio te interesa principalmente?</label>
+                    <div class="role-cards">
+                        <div class="role-card" onclick="seleccionarServicio('Web', this)">🌐 Desarrollo Web / Tienda Online</div>
+                        <div class="role-card" onclick="seleccionarServicio('App', this)">📱 Desarrollo de Aplicación Móvil</div>
+                        <div class="role-card" onclick="seleccionarServicio('Seguridad', this)">🛡️ Ciberseguridad / Soporte IT</div>
+                    </div>
+                    <input type="hidden" id="tipoServicio" value="">
+                </div>
+
+                <div id="ventanaWeb" class="form-reveal-group">
+                    <div class="form-reveal-content">
+                        <div class="form-group">
+                            <label>¿Ya tienes un diseño en mente o un dominio comprado?</label>
+                            <input type="text" id="respuestaWeb" placeholder="Ej. Sí, ya compré mi dominio .com...">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ventanaApp" class="form-reveal-group">
+                    <div class="form-reveal-content">
+                        <div class="form-group">
+                            <label>¿En qué plataforma quieres que funcione?</label>
+                            <input type="text" id="respuestaApp" placeholder="Ej. Solo Android, o Android y iPhone...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <textarea id="detallesProyecto" rows="5" placeholder="Cuéntanos más detalles de tu proyecto..." required></textarea>
+                </div>
+
+                <button type="submit" id="btnEnviarFormulario" class="btn" style="width: 100%;">Iniciar Proyecto</button>
+            </form>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 ZYVERON TECHNOLOGIES | Innovamos • Desarrollamos • Transformamos</p>
+    </footer>
+
+    <!-- Botón de guardado (Etiqueta HTML pura, siempre va AFUERA del script) -->
+    <button id="btnGuardarAdmin" onclick="guardarCambiosAdmin()">💾 Guardar Cambios</button>
+
+    <!-- Aquí empieza TODO el JavaScript -->
+    <script>
+        /* --- 1. MOTOR DE TARJETAS Y FORMULARIO --- */
+        function seleccionarServicio(tipo, elementoCarta) {
+            document.querySelectorAll('.role-card').forEach(carta => {
+                carta.classList.remove('active');
+            });
+            
+            elementoCarta.classList.add('active');
+            document.getElementById('tipoServicio').value = tipo;
+
+            document.getElementById('ventanaWeb').classList.remove('active');
+            document.getElementById('ventanaApp').classList.remove('active');
+
+            setTimeout(() => {
+                if (tipo === 'Web') {
+                    document.getElementById('ventanaWeb').classList.add('active');
+                } else if (tipo === 'App') {
+                    document.getElementById('ventanaApp').classList.add('active');
+                }
+            }, 50);
+        }
+
+        function toggleTarjeta(elemento) {
+            document.querySelectorAll('.card').forEach(carta => {
+                if (carta !== elemento) carta.classList.remove('abierta');
+            });
+            elemento.classList.toggle('abierta');
+        }
+
+        /* --- 2. MOTOR DE MODO ADMINISTRADOR AVANZADO --- */
+        const adminPass = "Zyveron2026"; // Contraseña maestra
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const textos = document.querySelectorAll('h1, h2, h3, p');
+            textos.forEach((el, index) => {
+                let guardado = localStorage.getItem('zyveron-texto-' + index);
+                if (guardado) {
+                    el.innerHTML = guardado;
+                }
+            });
+        });
+// --- 3. MOTOR DE ENVÍO A GOOGLE SHEETS ---
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzhy84wHa2aBUKvSqfoi9OP4QtYbpuLCTJc2RDOTEIad-5sYuD5ti7DhsRyj_MryI0mMg/exec";
+
+        document.getElementById('proyectoForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('btnEnviarFormulario');
+            const textoOriginal = btn.innerText;
+
+            // Recolectar datos básicos
+            const nombre = document.getElementById('clienteNombre').value;
+            const correo = document.getElementById('clienteCorreo').value;
+            const servicio = document.getElementById('tipoServicio').value;
+            const detalles = document.getElementById('detallesProyecto').value;
+
+            if(!servicio) {
+                return alert("⚠️ Por favor, selecciona un servicio (Web, App o Seguridad).");
+            }
+
+            // Recolectar la respuesta de la ventana secreta desplegada
+            let requisitoEspecial = "N/A";
+            if (servicio === 'Web') {
+                requisitoEspecial = document.getElementById('respuestaWeb').value || "No especificó";
+            } else if (servicio === 'App') {
+                requisitoEspecial = document.getElementById('respuestaApp').value || "No especificó";
+            }
+
+            const fecha = new Date().toLocaleString('es-ES');
+
+            // Armar el paquete de datos en el mismo orden de las columnas del Excel
+            const rowData = [fecha, nombre, correo, servicio, requisitoEspecial, detalles];
+
+            const payload = {
+                action: "add",
+                row: rowData
+            };
+
+            let formData = new FormData();
+            formData.append("payload", JSON.stringify(payload));
+
+            // Estado de carga
+            btn.innerText = "Enviando Solicitud...";
+            btn.disabled = true;
+
+            try {
+                // Envío silencioso sin problemas de CORS
+                await fetch(APPS_SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
+                
+                alert("✅ ¡Solicitud enviada con éxito! Nos pondremos en contacto pronto.");
+                
+                // Limpiar todo el formulario y resetear tarjetas
+                document.getElementById('proyectoForm').reset();
+                document.querySelectorAll('.role-card').forEach(c => c.classList.remove('active'));
+                document.getElementById('ventanaWeb').classList.remove('active');
+                document.getElementById('ventanaApp').classList.remove('active');
+                document.getElementById('tipoServicio').value = "";
+                
+            } catch(err) {
+                alert("❌ Ocurrió un error de red. Intenta nuevamente.");
+            } finally {
+                btn.innerText = textoOriginal;
+                btn.disabled = false;
+            }
+        });
+        function activarAdmin() {
+            let pass = prompt("Modo Administrador Avanzado.\nIngrese la contraseña maestra:");
+            
+            if (pass === adminPass) {
+                alert("✅ Modo Edición Activado.\nHaz clic en cualquier título o texto de la página para modificarlo.");
+                document.body.classList.add('modo-admin-activo');
+                document.getElementById('btnGuardarAdmin').style.display = 'block';
+
+                const textos = document.querySelectorAll('h1, h2, h3, p');
+                textos.forEach(el => {
+                    el.setAttribute('contenteditable', 'true');
+                });
+            } else if (pass !== null) {
+                alert("❌ Contraseña incorrecta.");
+            }
+        }
+
+        function guardarCambiosAdmin() {
+            const textos = document.querySelectorAll('h1, h2, h3, p');
+            textos.forEach((el, index) => {
+                localStorage.setItem('zyveron-texto-' + index, el.innerHTML);
+                el.removeAttribute('contenteditable');
+            });
+            
+            document.body.classList.remove('modo-admin-activo');
+            document.getElementById('btnGuardarAdmin').style.display = 'none';
+            alert("💾 Cambios guardados con éxito.");
+        }
+    </script>
+</body>
+</html>
