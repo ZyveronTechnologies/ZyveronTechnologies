@@ -416,29 +416,44 @@
     box-shadow: 0 0 20px rgba(183, 0, 255, 0.5);
     font-size: 1rem;
 }
- 
+ /* Contenedor del botón y menú */
 .menu-container {
   position: relative; /* referencia para el menú */
   display: inline-block;
 }
-   #MenuOpciones {
-  max-height: 0;              
-  overflow: hidden;           
-  transition: max-height 1.5s ease; /* más lento: 1.5 segundos */
+
+/* Menú oculto al inicio */
+#MenuOpciones {
+  max-height: 0;              /* oculto */
+  overflow: hidden;           /* oculta contenido */
+  transition: max-height 1.5s ease; /* animación lenta (1.5 segundos) */
   position: absolute;
-  top: 100%;   
-  left: 0;     
+  top: 100%;   /* aparece justo debajo del botón */
+  left: 0;     /* alineado con el botón */
   background: rgba(0,0,0,0.8);
   border-radius: 10px;
   min-width: 150px;
-  padding: 0 10px;
+  padding: 0 10px;            /* padding horizontal */
 }
 
-#MenuOpciones.show {
-  max-height: 500px; 
-  padding: 10px;     
+/* Estilo de los enlaces */
+#MenuOpciones a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  margin: 8px 0;
+  font-weight: bold;
 }
-     
+
+#MenuOpciones a:hover {
+  color: #00d4ff;
+}
+
+/* Clase que activa el despliegue */
+#MenuOpciones.show {
+  max-height: 500px; /* altura suficiente para mostrar enlaces */
+  padding: 10px;     /* padding visible cuando se despliega */
+}
 
 
 
@@ -785,14 +800,12 @@
             document.getElementById('btnGuardarAdmin').style.display = 'none';
             alert("💾 Cambios guardados con éxito.");
         }
-        <script>
-  const btnMenu = document.getElementById("btnMenu");
+        const btnMenu = document.getElementById("btnMenu");
   const MenuOpciones = document.getElementById("MenuOpciones");
 
   btnMenu.addEventListener("click", function() {
     MenuOpciones.classList.toggle("show");
   });
-</script>
 
   
     </script>
