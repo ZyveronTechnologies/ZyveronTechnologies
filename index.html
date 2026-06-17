@@ -428,7 +428,8 @@
     <img src="logo.png" alt="logo"> 
     Zyveron
 </div>
-        <nav>
+        <button id="btnMenu" class="btn">Menú</button>
+        <navid id="MenuOpciones" style="display: none;">
             <a href="#inicio">Inicio</a>
             <a href="#servicios">Servicios</a>
             <a href="#nosotros">Nosotros</a>
@@ -759,6 +760,16 @@
             document.getElementById('btnGuardarAdmin').style.display = 'none';
             alert("💾 Cambios guardados con éxito.");
         }
+        const btnMenu = document.getElementById("btnMenu");
+  const MenuOpciones = document.getElementById("MenuOpciones");
+
+  btnMenu.addEventListener("click", function() {
+    if (MenuOpciones.style.display === "none" || MenuOpciones.style.display === "") {
+      MenuOpciones.style.display = "block"; // muestra debajo del botón
+    } else {
+      MenuOpciones.style.display = "none"; // oculta
+    }
+  });
     </script>
 </body>
 </html>
